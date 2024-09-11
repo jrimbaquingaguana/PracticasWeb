@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../components/AuthContext';
+import axios from 'axios';
+import { useAuth } from '../components/AuthContext'; // Importar el contexto
 import './Login.css';
 
 const Login = () => {
@@ -8,9 +9,9 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login } = useAuth(); // Obtener la función de login del contexto
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = {};
@@ -22,14 +23,23 @@ const Login = () => {
       return;
     }
 
-    const storedUsername = localStorage.getItem('username');
-    const storedPassword = localStorage.getItem('password');
+    try {
+      const response = await axios.post('http://localhost:5000/login', {
+        username,
+        password
+      });
 
-    if (username === storedUsername && password === storedPassword) {
-      login(); // Actualiza el estado de autenticación
-      navigate('/dashboard'); // Redirige al LoginForm
-    } else {
-      alert('Credenciales incorrectas');
+      if (response.status === 200) {
+        alert('Inicio de sesión exitoso');
+        login(); // Actualiza el estado de autenticación
+        navigate('/dashboard'); // Redirige al dashboard después del inicio de sesión
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        alert('Credenciales incorrectas');
+      } else {
+        console.error('Error en el inicio de sesión:', error);
+      }
     }
   };
 

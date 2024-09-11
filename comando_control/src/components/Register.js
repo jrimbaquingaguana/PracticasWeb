@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Login.css'; // Usa los mismos estilos que para el login
+import bcrypt from 'bcryptjs';
+import axios from 'axios'; // Asegúrate de instalar axios: npm install axios
+import './Login.css';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -15,7 +17,7 @@ const Register = () => {
     return emailPattern.test(email);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = {};
@@ -31,13 +33,18 @@ const Register = () => {
       return;
     }
 
-    // Guardar el usuario en el almacenamiento local (localStorage)
-    localStorage.setItem('username', username);
-    localStorage.setItem('email', email);
-    localStorage.setItem('password', password);
+    try {
+      await axios.post('http://localhost:5000/register', {
+        username,
+        email,
+        password
+      });
 
-    alert('Registro exitoso');
-    navigate('/login'); // Redirige al login después del registro
+      alert('Registro exitoso');
+      navigate('/login'); // Redirige al login después del registro
+    } catch (error) {
+      console.error('Error al registrar el usuario:', error);
+    }
   };
 
   return (
@@ -69,8 +76,8 @@ const Register = () => {
             <label>Contraseña</label>
             <input
               type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
             {errors.password && <p className="error">{errors.password}</p>}
@@ -80,7 +87,7 @@ const Register = () => {
             <input
               type="password"
               value={confirmPassword}
-              onChage={(e) => setConfirmPassword(e.target.value)}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
             {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
