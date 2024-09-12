@@ -1,8 +1,9 @@
 // src/components/LoginForm.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './LoginForm.css';
+import './estado.css';
 import { Link } from 'react-router-dom';
 
 function LoginForm() {
@@ -10,6 +11,23 @@ function LoginForm() {
   const [port, setPort] = useState('');
   const [networkName, setNetworkName] = useState(''); // Añadido para capturar el nombre de la red
   const [error, setError] = useState('');
+  const [ncatStatus, setNcatStatus] = useState(''); // Estado para mostrar el estado de ncat
+
+  // Función para obtener el estado de ncat
+  const fetchNcatStatus = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/carpetas');
+      setNcatStatus(response.data.ncatOutput);
+    } catch (err) {
+      console.error('Error fetching ncat status:', err);
+      setNcatStatus('Error fetching status');
+    }
+  };
+
+  // Llamar a fetchNcatStatus cuando el componente se monte
+  useEffect(() => {
+    fetchNcatStatus();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +58,11 @@ function LoginForm() {
   };
 
   return (
+<<<<<<< HEAD
     <div className="login-form">
+=======
+    <div className="estado">
+>>>>>>> ef851861b61df914b3f5aec4f6aec147379dc814
       <nav className="dashboard-nav">
         <ul>
           <li><Link to="/dashboard">Inicio</Link></li>
@@ -49,6 +71,7 @@ function LoginForm() {
           <li><Link to="/Login">Cerrar Sesión</Link></li>
         </ul>
       </nav>
+<<<<<<< HEAD
       <h1>Generar Script PowerShell</h1>
       <form onSubmit={handleSubmit}>
         <div>
@@ -86,6 +109,13 @@ function LoginForm() {
         <button type="submit">Generar Script</button>
       </form>
       {error && <p>{error}</p>}
+=======
+
+      <div className="ncat-status">
+        <h2>Estado de ncat</h2>
+        <p>Estado actual: {ncatStatus}</p>
+      </div>
+>>>>>>> ef851861b61df914b3f5aec4f6aec147379dc814
     </div>
   );
 }

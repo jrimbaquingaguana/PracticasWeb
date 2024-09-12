@@ -3,7 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const bcrypt = require('bcryptjs');
-
+const { exec } = require('child_process');
 const app = express();
 const port = 5000;
 
@@ -144,4 +144,33 @@ app.post('/generate-script', (req, res) => {
 });
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
+});
+// Ruta para ejecutar ncat en segundo plano y obtener el directorio actual
+app.get('/carpetas', (req, res) => {
+  // Comando para ejecutar ncat en segundo plano y redirigir la salida
+  const ncatCommand = 'start /b ncat -nlvp 1234 > nul 2>&1';
+
+  let responded = false;
+
+  // Ejecutar el comando ncat en segundo plano
+  exec(ncatCommand, (errNcat) => {
+    if (!responded) {
+      if (errNcat) {
+        console.error('Error executing ncat command:', errNcat);
+        return res.status(500).json({ error: 'Error executing ncat command' });
+      }
+
+      // Responder con la salida de ncat
+      res.json({ ncatOutput: 'On' });
+      responded = true;  // Marcar que se ha respondido
+    }
+  });
+
+  // Configurar un timeout para responder con 'off' después de 30 segundos si no se ha respondido
+  setTimeout(() => {
+    if (!responded) {
+      res.json({ ncatOutput: 'off' });
+      responded = true;  // Marcar que se ha respondido
+    }
+  }, 30000);  // 30,000 milisegundos = 30 segundos
 });
