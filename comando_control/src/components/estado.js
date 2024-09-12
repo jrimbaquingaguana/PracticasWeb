@@ -4,17 +4,16 @@ import './LoginForm.css';
 import './estado.css';
 import { Link } from 'react-router-dom';
 
-function LoginForm() {
-  const [ip, setIp] = useState('');
-  const [port, setPort] = useState('');
-  const [error, setError] = useState('');
+function Estado() {
   const [ncatStatus, setNcatStatus] = useState('');
+  const [networkData, setNetworkData] = useState([]);
+  const [selectedNetworkName, setSelectedNetworkName] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
 
   // Función para obtener el estado de ncat
   const fetchNcatStatus = async () => {
     try {
       const response = await axios.get('http://localhost:5000/carpetas');
-      console.log('Ncat status response:', response.data); // Verifica la respuesta
       setNcatStatus(response.data.ncatOutput);
     } catch (err) {
       console.error('Error fetching ncat status:', err);
@@ -22,34 +21,38 @@ function LoginForm() {
     }
   };
 
-  // Llamar a fetchNcatStatus cuando el componente se monte
-  useEffect(() => {
-    fetchNcatStatus();
-  }, []);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-
+  // Función para obtener los datos de red
+  const fetchNetworkData = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/generate-script', 
-        { ip, port }, 
-        { responseType: 'blob' } // Asegura que la respuesta se maneje como un archivo
-      );
-
-      // Crear un enlace de descarga y hacer clic en él para descargar el archivo
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'script.ps1'); // Nombre del archivo para la descarga
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      const response = await axios.get('http://localhost:5000/network-data');
+      setNetworkData(response.data);
+      setFilteredData(response.data);  // Inicialmente, muestra todos los datos
     } catch (err) {
-      setError('Error generating script. Please try again.');
-      console.error(err);
+      console.error('Error fetching network data:', err);
     }
   };
+
+  // Filtrar los datos de red basados en el nombre seleccionado
+  const handleNetworkNameChange = (event) => {
+    const name = event.target.value;
+    setSelectedNetworkName(name);
+
+    if (name === '') {
+      setFilteredData(networkData);
+    } else {
+      const filtered = networkData.filter(data => data.networkName === name);
+      setFilteredData(filtered);
+    }
+  };
+
+  // Llamar a fetchNcatStatus y fetchNetworkData cuando el componente se monte
+  useEffect(() => {
+    fetchNcatStatus();
+    fetchNetworkData();
+  }, []);
+
+  // Obtener los nombres únicos de networks para el filtro
+  const networkNames = [...new Set(networkData.map(data => data.networkName))];
 
   return (
     <div className="estado">
@@ -66,8 +69,37 @@ function LoginForm() {
         <h2>Estado de ncat</h2>
         <p>Estado actual: {ncatStatus}</p>
       </div>
+
+      <div className="network-data">
+        <h2>Datos de Red</h2>
+        <select id="network-select" value={selectedNetworkName} onChange={handleNetworkNameChange}>
+          <option value="">Todos</option>
+          {networkNames.map((name, index) => (
+            <option key={index} value={name}>{name}</option>
+          ))}
+        </select>
+
+        <table>
+          <thead>
+            <tr>
+              <th>IP</th>
+              <th>Port</th>
+              <th>Network Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredData.map((data, index) => (
+              <tr key={index}>
+                <td>{data.ip}</td>
+                <td>{data.port}</td>
+                <td>{data.networkName}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
 
-export default LoginForm;
+export default Estado;

@@ -1,12 +1,103 @@
+/* Estilo para el contenedor principal */
+.pasantes {
+  color: #000000 !important; /* Color negro con alta prioridad */
+}
+
 .estado {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #e2aeae; /* Fondo gris claro para el formulario */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para profundidad */
-    max-width: 500px; /* Ancho máximo del formulario */
-    margin: 2rem auto; /* Centramos el formulario en la página con un margen vertical */
-    padding: 2rem; /* Espaciado interno */
-    border: 1px solid #080808; /* Borde sutil alrededor del formulario */
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f4f4f9; /* Fondo claro para el contenedor */
+  border-radius: 12px; /* Bordes redondeados más prominentes */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra más profunda para un efecto flotante */
+  max-width: 600px; /* Ancho máximo aumentado para mayor espacio */
+  margin: 2rem auto; /* Centramos el contenedor en la página con un margen vertical */
+  padding: 2.5rem; /* Espaciado interno aumentado para un diseño más espacioso */
+  border: 1px solid #dcdcdc; /* Borde sutil en un tono gris más claro */
+  font-family: Arial, sans-serif; /* Fuente más moderna */
+  color: #333; /* Color de texto más oscuro para mejor legibilidad */
+}
+
+/* Estilo para la barra de navegación */
+.dashboard-nav {
+  background-color: #4a4a4a; /* Fondo oscuro para la barra de navegación */
+  color: #fff; /* Color blanco para el texto */
+  padding: 1rem 2rem; /* Espaciado interno */
+  border-radius: 8px; /* Bordes redondeados para la barra de navegación */
+  margin-bottom: 2rem; /* Espaciado debajo de la barra de navegación */
+  width: 100%; /* Ancho completo del contenedor */
+}
+
+.dashboard-nav ul {
+  list-style-type: none; /* Eliminar viñetas */
+  padding: 0; /* Eliminar espaciado */
+  margin: 0; /* Eliminar margen */
+  display: flex; /* Alinear elementos en fila */
+  justify-content: space-around; /* Espaciado igual entre los elementos */
+}
+
+.dashboard-nav li {
+  margin: 0; /* Eliminar margen */
+}
+
+.dashboard-nav a {
+  color: #dacdcd; /* Color blanco para los enlaces */
+  text-decoration: none; /* Eliminar subrayado de los enlaces */
+  font-weight: bold; /* Texto en negrita */
+}
+
+.dashboard-nav a:hover {
+  text-decoration: underline; /* Subrayado al pasar el ratón sobre los enlaces */
+}
+
+/* Estilo para la sección de estado de ncat */
+.ncat-status {
+  width: 100%; /* Ancho completo del contenedor */
+  margin-bottom: 2rem; /* Espaciado entre secciones */
+  text-align: center; /* Centrar texto */
+}
+
+.ncat-status p {
+  font-size: 1.2rem; /* Tamaño de fuente aumentado */
+  color: #333; /* Color del texto */
+}
+
+/* Estilo para la selección de nombre de red */
+.network-data {
+  width: 100%; /* Ancho completo del contenedor */
+  margin-bottom: 2rem; /* Espaciado entre secciones */
+}
+
+.network-data select {
+  padding: 0.5rem 1rem; /* Espaciado interno del select */
+  border-radius: 6px; /* Bordes redondeados del select */
+  border: 1px solid #dcdcdc; /* Borde del select */
+  background-color: #fff; /* Fondo blanco del select */
+  font-size: 1rem; /* Tamaño de fuente del select */
+  color: #333; /* Color del texto dentro del select */
+  margin-bottom: 1rem; /* Espaciado debajo del select */
+}
+
+.network-data table {
+  width: 100%; /* Ancho completo de la tabla */
+  border-collapse: collapse; /* Colapsar bordes */
+}
+
+.network-data th, .network-data td {
+  padding: 0.75rem; /* Espaciado interno de las celdas */
+  text-align: left; /* Alinear texto a la izquierda */
+}
+
+.network-data th {
+  background-color: #4a4a4a; /* Fondo oscuro para los encabezados de la tabla */
+  color: #fff; /* Color blanco para el texto en los encabezados */
+  font-weight: bold; /* Negrita para los encabezados */
+}
+
+.network-data tr:nth-child(even) {
+  background-color: #f9f9f9; /* Alternar el color de fondo de las filas para una mejor legibilidad */
+}
+
+.network-data tr:hover {
+  background-color: #eaeaea; /* Fondo ligeramente oscuro al pasar el ratón sobre una fila */
+}

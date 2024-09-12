@@ -23,5 +23,10 @@
     "ip": "10.195.9.108",
     "port": "12345",
     "networkName": "Cociber"
+  },
+  {
+    "ip": "10.195.9.108",
+    "port": "1234",
+    "networkName": "Jacome"
   }
 ]

@@ -191,3 +191,18 @@ app.get('/carpetas', (req, res) => {
     }
   }, 30000);  // 30,000 milisegundos = 30 segundos
 });
+// Ruta para obtener datos de red desde el archivo network-data.json
+app.get('/network-data', (req, res) => {
+  const DATA_FILE = path.join(__dirname, 'network-data.json');
+
+  // Función para leer el archivo JSON
+  const readJSONFile = () => {
+    if (fs.existsSync(DATA_FILE)) {
+      return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+    }
+    return [];
+  };
+
+  const networkData = readJSONFile();
+  res.json(networkData);
+});
