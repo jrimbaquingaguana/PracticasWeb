@@ -1,16 +1,32 @@
 // src/components/LoginForm.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './LoginForm.css';
+import './estado.css';
 import { Link } from 'react-router-dom';
-
-
 
 function LoginForm() {
   const [ip, setIp] = useState('');
   const [port, setPort] = useState('');
   const [error, setError] = useState('');
+  const [ncatStatus, setNcatStatus] = useState(''); // Estado para mostrar el estado de ncat
+
+  // Función para obtener el estado de ncat
+  const fetchNcatStatus = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/carpetas');
+      setNcatStatus(response.data.ncatOutput);
+    } catch (err) {
+      console.error('Error fetching ncat status:', err);
+      setNcatStatus('Error fetching status');
+    }
+  };
+
+  // Llamar a fetchNcatStatus cuando el componente se monte
+  useEffect(() => {
+    fetchNcatStatus();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,44 +53,20 @@ function LoginForm() {
   };
 
   return (
-    
-    <div className="login-form">
-      
+    <div className="estado">
       <nav className="dashboard-nav">
-          <ul>
-            <li><Link to="/dashboard">Inicio</Link></li>
-            <li><Link to="/login-form">Generar Script</Link></li>
-            <li><Link to="/estado">Ver Estado</Link></li>
-            <li><Link to="/Login">Cerrar Sesión</Link></li>
-          </ul>
-        </nav>
-      <h1>Generar Script PowerShell</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="ip">Dirección IP:</label>
-          <input 
-            id="ip"
-            type="text"
-            value={ip}
-            onChange={(e) => setIp(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="port">Puerto:</label>
-          <input 
-            id="port"
-            type="number"
-            value={port}
-            onChange={(e) => setPort(e.target.value)}
-            required
-            min="1"
-            max="65535"
-          />
-        </div>
-        <button type="submit">Generar Script</button>
-      </form>
-      {error && <p>{error}</p>}
+        <ul>
+          <li><Link to="/dashboard">Inicio</Link></li>
+          <li><Link to="/login-form">Generar Script</Link></li>
+          <li><Link to="/estado">Ver Estado</Link></li>
+          <li><Link to="/Login">Cerrar Sesión</Link></li>
+        </ul>
+      </nav>
+
+      <div className="ncat-status">
+        <h2>Estado de ncat</h2>
+        <p>Estado actual: {ncatStatus}</p>
+      </div>
     </div>
   );
 }

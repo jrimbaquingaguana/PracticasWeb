@@ -30,13 +30,12 @@ const Login = () => {
       });
 
       if (response.status === 200) {
-        alert('Inicio de sesión exitoso');
         login(); // Actualiza el estado de autenticación
-        navigate('/dashboard'); // Redirige al dashboard después del inicio de sesión
+        navigate('/dashboard', { replace: true }); // Redirige al dashboard
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        alert('Credenciales incorrectas');
+        setErrors({ general: 'Credenciales incorrectas' });
       } else {
         console.error('Error en el inicio de sesión:', error);
       }
@@ -68,6 +67,7 @@ const Login = () => {
             />
             {errors.password && <p className="error">{errors.password}</p>}
           </div>
+          {errors.general && <p className="error">{errors.general}</p>}
           <button type="submit" className="btn-login">Iniciar Sesión</button>
         </form>
         <p className="register-link">
