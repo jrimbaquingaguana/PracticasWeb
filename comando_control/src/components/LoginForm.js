@@ -5,11 +5,10 @@ import axios from 'axios';
 import './LoginForm.css';
 import { Link } from 'react-router-dom';
 
-
-
 function LoginForm() {
   const [ip, setIp] = useState('');
   const [port, setPort] = useState('');
+  const [networkName, setNetworkName] = useState(''); // Añadido para capturar el nombre de la red
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
@@ -17,16 +16,20 @@ function LoginForm() {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:5000/generate-script', 
-        { ip, port }, 
+      const response = await axios.post(
+        'http://localhost:5000/generate-script',
+        { ip, port, networkName }, // Enviar todos los datos necesarios
         { responseType: 'blob' } // Asegura que la respuesta se maneje como un archivo
       );
 
       // Crear un enlace de descarga y hacer clic en él para descargar el archivo
       const url = window.URL.createObjectURL(new Blob([response.data]));
+      const contentDisposition = response.headers['content-disposition'];
+      const filename = contentDisposition ? contentDisposition.split('filename=')[1] : 'script.ps1';
+      
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'script.ps1'); // Nombre del archivo para la descarga
+      link.setAttribute('download', filename); // Nombre del archivo para la descarga
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -37,17 +40,15 @@ function LoginForm() {
   };
 
   return (
-    
     <div className="login-form">
-      
       <nav className="dashboard-nav">
-          <ul>
-            <li><Link to="/dashboard">Inicio</Link></li>
-            <li><Link to="/login-form">Generar Script</Link></li>
-            <li><Link to="/estado">Ver Estado</Link></li>
-            <li><Link to="/Login">Cerrar Sesión</Link></li>
-          </ul>
-        </nav>
+        <ul>
+          <li><Link to="/dashboard">Inicio</Link></li>
+          <li><Link to="/login-form">Generar Script</Link></li>
+          <li><Link to="/estado">Ver Estado</Link></li>
+          <li><Link to="/Login">Cerrar Sesión</Link></li>
+        </ul>
+      </nav>
       <h1>Generar Script PowerShell</h1>
       <form onSubmit={handleSubmit}>
         <div>
@@ -70,6 +71,16 @@ function LoginForm() {
             required
             min="1"
             max="65535"
+          />
+        </div>
+        <div>
+          <label htmlFor="networkName">Nombre de la Red:</label>
+          <input 
+            id="networkName"
+            type="text"
+            value={networkName}
+            onChange={(e) => setNetworkName(e.target.value)}
+            required
           />
         </div>
         <button type="submit">Generar Script</button>

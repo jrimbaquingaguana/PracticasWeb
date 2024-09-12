@@ -71,16 +71,39 @@ app.post('/login', async (req, res) => {
     res.status(401).json({ error: 'Credenciales incorrectas' });
   }
 });
+// Ruta para manejar la generación del script
 app.post('/generate-script', (req, res) => {
-  const { ip, port } = req.body;
+  const { ip, port, networkName } = req.body;
 
-  if (!ip || !port) {
-    return res.status(400).json({ error: 'IP and port are required' });
+  if (!ip || !port || !networkName) {
+    return res.status(400).json({ error: 'IP, port, and networkName are required' });
   }
+
+  const DATA_FILE = path.join(__dirname, 'network-data.json');
+
+  // Función para leer el archivo JSON
+  const readJSONFile = () => {
+    if (fs.existsSync(DATA_FILE)) {
+      return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+    }
+    return [];
+  };
+
+  // Función para escribir en el archivo JSON
+  const writeJSONFile = (data) => {
+    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+  };
+
+  // Crear nuevo registro de red
+  const newNetworkData = { ip, port, networkName };
+
+  // Leer datos existentes, agregar nuevos datos y guardar en el archivo
+  const networkData = readJSONFile();
+  networkData.push(newNetworkData);
+  writeJSONFile(networkData);
 
   const templatePath = path.join(__dirname, 'template.ps1');
   
-  // Validar existencia del archivo template
   if (!fs.existsSync(templatePath)) {
     return res.status(500).json({ error: 'Template file not found' });
   }
@@ -90,9 +113,8 @@ app.post('/generate-script', (req, res) => {
       return res.status(500).json({ error: 'Error reading template file' });
     }
 
-    // Reemplazar los marcadores de posición en el script
-    let modifiedScript = data.replace(/__IP__/g, ip);
-    modifiedScript = modifiedScript.replace(/__PORT__/g, port);
+    let modifiedScript = data.replace(/IP/g, ip);
+    modifiedScript = modifiedScript.replace(/PORT/g, port);
 
     const filename = `script_${Date.now()}.ps1`;
     const generatedPath = path.join(__dirname, 'public', 'generated', filename);
@@ -107,12 +129,11 @@ app.post('/generate-script', (req, res) => {
           return res.status(500).json({ error: 'Error writing modified script' });
         }
 
-        // Enviar el archivo como descarga
+        // Enviar el archivo generado al cliente
         res.download(generatedPath, filename, (err) => {
           if (err) {
             console.error('Error sending file:', err);
           }
-          // Elimina el archivo después de enviarlo
           fs.unlink(generatedPath, (err) => {
             if (err) console.error('Error deleting file:', err);
           });
