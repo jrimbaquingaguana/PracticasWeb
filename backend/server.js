@@ -142,6 +142,23 @@ app.post('/generate-script', (req, res) => {
     });
   });
 });
+
+app.get('/check-duplicates', (req, res) => {
+  const { ip, port, networkName } = req.query;
+
+  const DATA_FILE = path.join(__dirname, 'network-data.json'); // Archivo JSON con la información
+
+  if (!fs.existsSync(DATA_FILE)) {
+    return res.status(200).json({ exists: false });
+  }
+
+  const data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+
+  const exists = data.some(item => item.ip === ip && item.port === port && item.networkName === networkName);
+
+  res.status(200).json({ exists });
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

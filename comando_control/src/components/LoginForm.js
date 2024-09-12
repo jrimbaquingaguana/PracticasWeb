@@ -1,17 +1,14 @@
-// src/components/LoginForm.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './LoginForm.css';
-import './estado.css';
 import { Link } from 'react-router-dom';
 
 function LoginForm() {
   const [ip, setIp] = useState('');
   const [port, setPort] = useState('');
-  const [networkName, setNetworkName] = useState(''); // Añadido para capturar el nombre de la red
+  const [networkName, setNetworkName] = useState('');
   const [error, setError] = useState('');
-  const [ncatStatus, setNcatStatus] = useState(''); // Estado para mostrar el estado de ncat
+  const [ncatStatus, setNcatStatus] = useState('');
 
   // Función para obtener el estado de ncat
   const fetchNcatStatus = async () => {
@@ -29,25 +26,45 @@ function LoginForm() {
     fetchNcatStatus();
   }, []);
 
+  // Función para verificar si la IP, puerto y nombre de red ya existen
+  const checkForDuplicates = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/check-duplicates', {
+        params: { ip, port, networkName }
+      });
+      return response.data.exists;
+    } catch (err) {
+      console.error('Error checking for duplicates:', err);
+      setError('Error checking for duplicates. Please try again.');
+      return false;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
+    // Verificar duplicados antes de generar el script
+    const isDuplicate = await checkForDuplicates();
+    if (isDuplicate) {
+      setError('La combinación de IP, puerto y nombre de red ya existe.');
+      return;
+    }
+
     try {
       const response = await axios.post(
         'http://localhost:5000/generate-script',
-        { ip, port, networkName }, // Enviar todos los datos necesarios
-        { responseType: 'blob' } // Asegura que la respuesta se maneje como un archivo
+        { ip, port, networkName },
+        { responseType: 'blob' }
       );
 
-      // Crear un enlace de descarga y hacer clic en él para descargar el archivo
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const contentDisposition = response.headers['content-disposition'];
       const filename = contentDisposition ? contentDisposition.split('filename=')[1] : 'script.ps1';
       
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', filename); // Nombre del archivo para la descarga
+      link.setAttribute('download', filename);
       document.body.appendChild(link);
       link.click();
       link.remove();
