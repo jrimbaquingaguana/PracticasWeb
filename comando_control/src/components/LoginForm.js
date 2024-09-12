@@ -47,7 +47,7 @@ function LoginForm() {
     // Verificar duplicados antes de generar el script
     const isDuplicate = await checkForDuplicates();
     if (isDuplicate) {
-      setError('La combinación de IP, puerto y nombre de red ya existe.');
+      setError('Ese puerto ya existe en la red');
       return;
     }
 
