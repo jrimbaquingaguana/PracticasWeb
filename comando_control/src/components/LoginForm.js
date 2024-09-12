@@ -58,11 +58,7 @@ function LoginForm() {
   };
 
   return (
-<<<<<<< HEAD
     <div className="login-form">
-=======
-    <div className="estado">
->>>>>>> ef851861b61df914b3f5aec4f6aec147379dc814
       <nav className="dashboard-nav">
         <ul>
           <li><Link to="/dashboard">Inicio</Link></li>
@@ -71,7 +67,6 @@ function LoginForm() {
           <li><Link to="/Login">Cerrar Sesión</Link></li>
         </ul>
       </nav>
-<<<<<<< HEAD
       <h1>Generar Script PowerShell</h1>
       <form onSubmit={handleSubmit}>
         <div>
@@ -109,13 +104,6 @@ function LoginForm() {
         <button type="submit">Generar Script</button>
       </form>
       {error && <p>{error}</p>}
-=======
-
-      <div className="ncat-status">
-        <h2>Estado de ncat</h2>
-        <p>Estado actual: {ncatStatus}</p>
-      </div>
->>>>>>> ef851861b61df914b3f5aec4f6aec147379dc814
     </div>
   );
 }
