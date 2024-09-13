@@ -73,7 +73,7 @@ function Estado() {
       <div className="network-data">
         <h2>Datos de Red</h2>
         <select id="network-select" value={selectedNetworkName} onChange={handleNetworkNameChange}>
-          <option value="">Todos</option>
+          <option value="">Todos las Redes</option>
           {networkNames.map((name, index) => (
             <option key={index} value={name}>{name}</option>
           ))}
