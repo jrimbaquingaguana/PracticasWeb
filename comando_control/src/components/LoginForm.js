@@ -40,9 +40,21 @@ function LoginForm() {
     }
   };
 
+  // Función para validar el puerto
+  const isValidPort = (port) => {
+    const portNumber = parseInt(port, 10);
+    return /^[0-9]{4}$/.test(port) && portNumber >= 1000 && portNumber <= 9999;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    // Validar puerto
+    if (!isValidPort(port)) {
+      setError('El puerto debe ser un número de 4 dígitos entre 1000 y 9999.');
+      return;
+    }
 
     // Verificar duplicados antes de generar el script
     const isDuplicate = await checkForDuplicates();
@@ -100,12 +112,10 @@ function LoginForm() {
           <label htmlFor="port">Puerto:</label>
           <input 
             id="port"
-            type="number"
+            type="text" // Cambiado a "text" para permitir validación personalizada
             value={port}
             onChange={(e) => setPort(e.target.value)}
             required
-            min="1"
-            max="65535"
           />
         </div>
         <div>
