@@ -10,14 +10,16 @@ function Estado() {
   const [selectedNetworkName, setSelectedNetworkName] = useState('');
   const [filteredData, setFilteredData] = useState([]);
 
-  // Función para obtener el estado de ncat
-  const fetchNcatStatus = async () => {
+  // Función para obtener el estado de ncat para un puerto específico
+  const fetchNcatStatus = async (port) => {
     try {
-      const response = await axios.get('http://localhost:5000/carpetas');
-      setNcatStatus(response.data.ncatOutput);
+      const response = await axios.get('http://localhost:5000/carpetas', {
+        params: { port } // Pasar el puerto como parámetro de consulta
+      });
+      return response.data.ncatOutput; // Devolver el estado de ncat
     } catch (err) {
       console.error('Error fetching ncat status:', err);
-      setNcatStatus('Error fetching status');
+      return 'Error'; // Retornar un mensaje de error si falla la solicitud
     }
   };
 
@@ -25,8 +27,19 @@ function Estado() {
   const fetchNetworkData = async () => {
     try {
       const response = await axios.get('http://localhost:5000/network-data');
-      setNetworkData(response.data);
-      setFilteredData(response.data);  // Inicialmente, muestra todos los datos
+      const data = response.data;
+      setNetworkData(data);
+      setFilteredData(data);  // Inicialmente, muestra todos los datos
+
+      // Consultar el estado de ncat para cada puerto
+      const statusPromises = data.map(async (item) => {
+        const status = await fetchNcatStatus(item.port);
+        return { ...item, ncatStatus: status };
+      });
+
+      // Esperar a que todas las promesas se resuelvan y actualizar el estado
+      const updatedData = await Promise.all(statusPromises);
+      setFilteredData(updatedData);
     } catch (err) {
       console.error('Error fetching network data:', err);
     }
@@ -45,14 +58,23 @@ function Estado() {
     }
   };
 
-  // Llamar a fetchNcatStatus y fetchNetworkData cuando el componente se monte
+  // Llamar a fetchNetworkData cuando el componente se monte
   useEffect(() => {
-    fetchNcatStatus();
     fetchNetworkData();
   }, []);
 
   // Obtener los nombres únicos de networks para el filtro
   const networkNames = [...new Set(networkData.map(data => data.networkName))];
+
+  // Función para determinar el color del botón basado en el estado de ncat
+  const getButtonColor = (status) => {
+    return status === 'On' ? 'green' : 'red'; // Verde si está encendido, rojo si está apagado
+  };
+
+  // Función para manejar el clic en el botón "Tortazo"
+  const handleTortazoClick = () => {
+    alert('¡Tortazo!');
+  };
 
   return (
     <div className="estado">
@@ -65,19 +87,8 @@ function Estado() {
         </ul>
       </nav>
 
-      <div className="ncat-status">
-        <h2>Estado de ncat</h2>
-        <p>Estado actual: {ncatStatus}</p>
-      </div>
-
       <div className="network-data">
         <h2>Datos de Red</h2>
-        <select id="network-select" value={selectedNetworkName} onChange={handleNetworkNameChange}>
-          <option value="">Todos</option>
-          {networkNames.map((name, index) => (
-            <option key={index} value={name}>{name}</option>
-          ))}
-        </select>
 
         <table>
           <thead>
@@ -85,6 +96,8 @@ function Estado() {
               <th>IP</th>
               <th>Port</th>
               <th>Network Name</th>
+              <th>Status</th>
+              <th>Action</th> {/* Añadido para el nuevo botón */}
             </tr>
           </thead>
           <tbody>
@@ -93,6 +106,26 @@ function Estado() {
                 <td>{data.ip}</td>
                 <td>{data.port}</td>
                 <td>{data.networkName}</td>
+                <td>
+                  <button 
+                    style={{ 
+                      backgroundColor: getButtonColor(data.ncatStatus) 
+                    }}
+                    disabled // Desactivar el botón si no necesitas interacción
+                  >
+                    {data.ncatStatus === 'On' ? 'On' : 'Off'}
+                  </button>
+                </td>
+                <td>
+                  {data.ncatStatus === 'On' && ( // Mostrar el botón "Tortazo" solo si el estado es "On"
+                    <button 
+                      className="tortazo-button"
+                      onClick={handleTortazoClick}
+                    >
+                      Tortazo
+                    </button>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

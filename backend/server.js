@@ -71,6 +71,7 @@ app.post('/login', async (req, res) => {
     res.status(401).json({ error: 'Credenciales incorrectas' });
   }
 });
+
 // Ruta para manejar la generación del script
 app.post('/generate-script', (req, res) => {
   const { ip, port, networkName } = req.body;
@@ -162,10 +163,17 @@ app.get('/check-duplicates', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
-// Ruta para ejecutar ncat en segundo plano y obtener el directorio actual
+
+// Ruta para ejecutar ncat en segundo plano y obtener el estado del puerto
 app.get('/carpetas', (req, res) => {
-  // Comando para ejecutar ncat en segundo plano y redirigir la salida
-  const ncatCommand = 'start /b ncat -nlvp 1234 > nul 2>&1';
+  const { port } = req.query;
+
+  if (!port) {
+    return res.status(400).json({ error: 'Port is required' });
+  }
+
+  // Comando para ejecutar ncat en segundo plano con el puerto proporcionado
+  const ncatCommand = `start /b ncat -nlvp ${port} > nul 2>&1`;
 
   let responded = false;
 
@@ -186,11 +194,12 @@ app.get('/carpetas', (req, res) => {
   // Configurar un timeout para responder con 'off' después de 30 segundos si no se ha respondido
   setTimeout(() => {
     if (!responded) {
-      res.json({ ncatOutput: 'off' });
+      res.json({ ncatOutput: 'Off' });
       responded = true;  // Marcar que se ha respondido
     }
-  }, 30000);  // 30,000 milisegundos = 30 segundos
+  }, 2000);  // 30,000 milisegundos = 30 segundos
 });
+
 // Ruta para obtener datos de red desde el archivo network-data.json
 app.get('/network-data', (req, res) => {
   const DATA_FILE = path.join(__dirname, 'network-data.json');
