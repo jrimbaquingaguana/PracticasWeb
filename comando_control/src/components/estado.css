@@ -50,34 +50,19 @@
   text-decoration: underline; /* Subrayado al pasar el ratón sobre los enlaces */
 }
 
-/* Estilo para la sección de estado de ncat */
-.ncat-status {
-  width: 100%; /* Ancho completo del contenedor */
-  margin-bottom: 2rem; /* Espaciado entre secciones */
-  text-align: center; /* Centrar texto */
-}
-
-.ncat-status p {
-  font-size: 1.2rem; /* Tamaño de fuente aumentado */
-  color: #333; /* Color del texto */
-}
-
-/* Estilo para la selección de nombre de red */
+/* Estilo para la sección de datos de red */
 .network-data {
   width: 100%; /* Ancho completo del contenedor */
   margin-bottom: 2rem; /* Espaciado entre secciones */
 }
 
-.network-data select {
-  padding: 0.5rem 1rem; /* Espaciado interno del select */
-  border-radius: 6px; /* Bordes redondeados del select */
-  border: 1px solid #dcdcdc; /* Borde del select */
-  background-color: #fff; /* Fondo blanco del select */
-  font-size: 1rem; /* Tamaño de fuente del select */
-  color: #333; /* Color del texto dentro del select */
-  margin-bottom: 1rem; /* Espaciado debajo del select */
+/* Contenedor de la tabla para agregar la barra de desplazamiento */
+.table-container {
+  max-height: 400px; /* Ajusta la altura según tus necesidades */
+  overflow-y: auto; /* Agrega barra de desplazamiento vertical si es necesario */
 }
 
+/* Resto del CSS para la tabla */
 .network-data table {
   width: 100%; /* Ancho completo de la tabla */
   border-collapse: collapse; /* Colapsar bordes */
@@ -100,4 +85,19 @@
 
 .network-data tr:hover {
   background-color: #eaeaea; /* Fondo ligeramente oscuro al pasar el ratón sobre una fila */
+}
+
+/* Estilo para el botón "Tortazo" */
+.tortazo-button {
+  background-color: #ff6347; /* Color de fondo del botón */
+  color: #fff; /* Color del texto del botón */
+  border: none; /* Sin borde */
+  padding: 0.5rem 1rem; /* Espaciado interno del botón */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+  font-size: 1rem; /* Tamaño de fuente */
+}
+
+.tortazo-button:hover {
+  background-color: #e55347; /* Color de fondo del botón al pasar el ratón sobre él */
 }

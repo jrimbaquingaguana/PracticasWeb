@@ -73,7 +73,7 @@ function Estado() {
 
   // Función para manejar el clic en el botón "Tortazo"
   const handleTortazoClick = () => {
-    alert('Haz salido hackiado');
+    alert('haz sido atacado por dos ingenieros del cociber');
   };
 
   return (
@@ -90,46 +90,48 @@ function Estado() {
       <div className="network-data">
         <h2>Datos de Red</h2>
 
-        <table>
-          <thead>
-            <tr>
-              <th>IP</th>
-              <th>Port</th>
-              <th>Network Name</th>
-              <th>Status</th>
-              <th>Action</th> {/* Añadido para el nuevo botón */}
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.map((data, index) => (
-              <tr key={index}>
-                <td>{data.ip}</td>
-                <td>{data.port}</td>
-                <td>{data.networkName}</td>
-                <td>
-                  <button 
-                    style={{ 
-                      backgroundColor: getButtonColor(data.ncatStatus) 
-                    }}
-                    disabled // Desactivar el botón si no necesitas interacción
-                  >
-                    {data.ncatStatus === 'On' ? 'On' : 'Off'}
-                  </button>
-                </td>
-                <td>
-                  {data.ncatStatus === 'On' && ( // Mostrar el botón "Tortazo" solo si el estado es "On"
-                    <button 
-                      className="tortazo-button"
-                      onClick={handleTortazoClick}
-                    >
-                      Tortazo
-                    </button>
-                  )}
-                </td>
+        <div className="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>IP</th>
+                <th>Port</th>
+                <th>Network Name</th>
+                <th>Status</th>
+                <th>Action</th> {/* Añadido para el nuevo botón */}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredData.map((data, index) => (
+                <tr key={index}>
+                  <td>{data.ip}</td>
+                  <td>{data.port}</td>
+                  <td>{data.networkName}</td>
+                  <td>
+                    <button 
+                      style={{ 
+                        backgroundColor: getButtonColor(data.ncatStatus) 
+                      }}
+                      disabled // Desactivar el botón si no necesitas interacción
+                    >
+                      {data.ncatStatus === 'On' ? 'On' : 'Off'}
+                    </button>
+                  </td>
+                  <td>
+                    {data.ncatStatus === 'On' && ( // Mostrar el botón "Tortazo" solo si el estado es "On"
+                      <button 
+                        className="tortazo-button"
+                        onClick={handleTortazoClick}
+                      >
+                        ATAQUE!
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

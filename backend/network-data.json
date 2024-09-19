@@ -10,8 +10,38 @@
     "networkName": "Cociber1"
   },
   {
+<<<<<<< HEAD
+    "ip": "10.195.9.154",
+    "port": "1234",
+    "networkName": "Jacomes"
+  },
+  {
+    "ip": "10.195.9.154",
+    "port": "1234",
+    "networkName": "Jacomecito"
+  },
+  {
+    "ip": "10.195.9.154",
+    "port": "1231",
+    "networkName": "Jacomecito"
+  },
+  {
+    "ip": "10.195.9.154",
+    "port": "1234",
+    "networkName": "Prueba1"
+  },
+  {
+    "ip": "10.195.9.154",
+    "port": "1234",
+    "networkName": "prueba2"
+=======
     "ip": "10.195.9.108",
     "port": "1237",
     "networkName": "Cociber1"
+  },
+  {
+    "ip": "10.195.9.108",
+    "port": "1234",
+    "networkName": "Jacomesito"
   }
 ]

@@ -117,7 +117,7 @@ app.post('/generate-script', (req, res) => {
     let modifiedScript = data.replace(/IP/g, ip);
     modifiedScript = modifiedScript.replace(/PORT/g, port);
 
-    const filename = `script_${Date.now()}.ps1`;
+    const filename = `script_$Date.now()}.ps1`;
     const generatedPath = path.join(__dirname, 'public', 'generated', filename);
 
     fs.mkdir(path.dirname(generatedPath), { recursive: true }, (err) => {
@@ -196,8 +196,8 @@ app.get('/carpetas', (req, res) => {
     if (!responded) {
       res.json({ ncatOutput: 'Off' });
       responded = true;  // Marcar que se ha respondido
-    }
-  }, 2000);  // 30,000 milisegundos = 30 segundos
+    } 
+  }, 10000);  // 30,000 milisegundos = 30 segundos
 });
 
 // Ruta para obtener datos de red desde el archivo network-data.json
