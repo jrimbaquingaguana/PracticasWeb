@@ -158,7 +158,7 @@ app.get('/check-duplicates', (req, res) => {
   const exists = data.some(item => item.ip === ip && item.port === port && item.networkName === networkName);
 
   res.status(200).json({ exists });
-});
+}); 
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

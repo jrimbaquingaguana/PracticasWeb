@@ -73,7 +73,7 @@ function Estado() {
 
   // Función para manejar el clic en el botón "Tortazo"
   const handleTortazoClick = () => {
-    alert('¡Tortazo!');
+    alert('Haz salido hackiado');
   };
 
   return (
