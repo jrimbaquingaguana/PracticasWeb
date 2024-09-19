@@ -57,7 +57,6 @@ function LoginForm() {
         { ip, port, networkName },
         { responseType: 'blob' }
       );
-
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const contentDisposition = response.headers['content-disposition'];
       const filename = contentDisposition ? contentDisposition.split('filename=')[1] : 'script.ps1';

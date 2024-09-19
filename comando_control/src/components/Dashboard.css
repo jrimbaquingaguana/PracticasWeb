@@ -50,13 +50,40 @@
   
   .dashboard-main {
     padding: 2rem;
-    background-color: #F8F9FA; /* Fondo claro para el contenido principal */
+    background-color: #FFFFFF; /* Fondo blanco para el recuadro */
     flex-grow: 1;
-    border-top: 1px solid #ddd; /* Borde superior sutil */
+    border-top: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra el contenido horizontalmente */
+    justify-content: flex-start; /* Alinea el contenido hacia la parte superior */
   }
+  
   
   .dashboard-main h2 {
     margin-top: 0;
     color: #333; /* Color del texto principal */
   }
   
+.dashboard-image {
+  width: 90%; /* La imagen ocupará el 100% del ancho disponible del recuadro */
+  max-width: 800px; /* Tamaño máximo para evitar que sea demasiado grande */
+  height: auto; /* Mantiene las proporciones */
+  display: block; /* Se asegura de que la imagen sea un bloque */
+  margin: 20px auto; /* Centra la imagen horizontalmente */
+  border-radius: 10px; /* Bordes redondeados para darle un mejor acabado */
+  box-shadow: 0 4px 20px rgba(3, 2, 2, 0.2); /* Sombra más intensa */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave */
+}
+
+.dashboard-image:hover {
+  transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el ratón */
+  box-shadow: 0 8px 30px rgba(5, 2, 2, 0.3); /* Sombra más pronunciada al hacer hover */
+}
+
+/* Añadiendo un degradado como fondo en un contenedor */
+.dashboard-container {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
+  padding: 20px; /* Espaciado interno */
+  border-radius: 15px; /* Bordes redondeados en el contenedor */
+}
