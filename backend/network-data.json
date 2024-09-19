@@ -10,6 +10,7 @@
     "networkName": "Cociber1"
   },
   {
+<<<<<<< HEAD
     "ip": "10.195.9.154",
     "port": "1234",
     "networkName": "Jacomes"
@@ -33,5 +34,15 @@
     "ip": "10.195.9.154",
     "port": "1234",
     "networkName": "prueba2"
+=======
+    "ip": "10.195.9.108",
+    "port": "1237",
+    "networkName": "Cociber1"
+  },
+  {
+    "ip": "10.195.9.108",
+    "port": "1234",
+    "networkName": "Jacomesito"
+>>>>>>> 2551dacbbf0e78787def9fa79771b5d03cc4347e
   }
 ]

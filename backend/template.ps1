@@ -18,8 +18,8 @@ function ConvertFrom-ByteArray {
 }
 
 # Variables para IP y Puerto
-$ip = '__IP__'
-$puerto = '__PORT__'
+$ip = 'IP'
+$puerto = 'PORT'
 
 # Validar que el puerto sea un número válido
 if (-not [int]::TryParse($puerto, [ref]$null)) {
