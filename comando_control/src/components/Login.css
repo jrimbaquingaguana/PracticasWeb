@@ -1,13 +1,14 @@
-/* Login.css */
+/* Estilo General para Login y Registro */
 body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+  background: linear-gradient(to right, #000428, #004e92); /* Cambia el fondo al degradado azul oscuro */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  color: #ffffff;
 }
 
 .login-container {
@@ -21,32 +22,37 @@ body {
 }
 
 .login-form {
-  background-color: #ffffff;
-  padding: 40px;
+  background: linear-gradient(to right, #141e30, #243b55); /* Fondo degradado oscuro */
   border-radius: 15px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); /* Sombra más fuerte */
+  display: flex;
+  padding: 20px;
   width: 100%;
-  max-width: 400px;
+  max-width: 800px;
   position: relative;
   overflow: hidden;
+  color: #ffffff;
 }
 
-.login-form::before {
-  content: "";
-  position: absolute;
-  top: -20px;
-  left: -20px;
-  width: calc(100% + 40px);
-  height: calc(100% + 40px);
-  background: radial-gradient(circle, rgba(0, 123, 255, 0.2), transparent);
-  border-radius: 15px;
-  z-index: -1;
+.login-form .left-section {
+  padding: 40px;
+  width: 50%;
+}
+
+.login-form .right-section {
+  width: 50%;
+  background: linear-gradient(to right, #00f260, #0575e6); /* Degradado azul-verde */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
 }
 
 .login-form h2 {
   margin-bottom: 30px;
   font-size: 28px;
-  color: #e0d7d7;
+  color: #ffffff;
   font-weight: 600;
 }
 
@@ -59,7 +65,7 @@ body {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
-  color: #e9e0e0;
+  color: #ffffff;
 }
 
 .form-group input {
@@ -69,6 +75,8 @@ body {
   border: 1px solid #ddd;
   font-size: 16px;
   transition: all 0.3s ease;
+  background-color: #141e30; /* Fondo de los inputs */
+  color: #ffffff; /* Color del texto de los inputs */
 }
 
 .form-group input::placeholder {
@@ -77,7 +85,7 @@ body {
 }
 
 .form-group input:focus {
-  border-color: #007bff;
+  border-color: #00f260;
   outline: none;
   box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
 }
@@ -86,7 +94,7 @@ body {
   width: 100%;
   padding: 14px;
   border-radius: 8px;
-  background-color: #007bff;
+  background: linear-gradient(to right, #00f260, #0575e6); /* Degradado en los botones */
   color: white;
   border: none;
   font-size: 18px;
@@ -95,7 +103,7 @@ body {
 }
 
 .btn-login:hover {
-  background-color: #0056b3;
+  background-color: #0575e6;
   transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
@@ -105,6 +113,25 @@ body {
   transform: translateY(1px);
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
+
+.right-section h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.right-section p {
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.right-section a {
+  color: #f5f5f5;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 .error {
   color: #e74c3c;
   font-size: 14px;

@@ -16,7 +16,7 @@
     margin-bottom: 1.5rem;
     text-align: center;
     font-weight: bold; /* Usamos negrita como en la hoja original */
-    color: #333; /* Mismo tono oscuro para el texto */
+    color: #edf5ec; /* Mismo tono oscuro para el texto */
 }
 
 .login-form form {
@@ -38,7 +38,7 @@ label {
     font-size: 1.1rem;
     margin-bottom: 0.5rem;
     font-weight: 600;
-    color: #333; /* Mismo tono oscuro que las etiquetas del estilo original */
+    color: #cfc7c7; /* Mismo tono oscuro que las etiquetas del estilo original */
 }
 
 input {
@@ -79,4 +79,16 @@ button:hover {
     font-weight: 600;
     margin-top: 1rem;
     text-align: center;
+}
+/* Contenedor de la tabla con estilo visual */
+.table-container {
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo semi-transparente oscuro */
+    border-radius: 12px; /* Bordes redondeados */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde con transparencia */
+    padding: 1rem; /* Espaciado interno */
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.7); /* Resplandor neón */
+    margin-bottom: 2rem;
+    max-height: 300px; /* Ajusta la altura máxima para que no sobresalga */
+    overflow-y: auto; /* Permitir desplazamiento si el contenido es demasiado grande */
+    width: 106%; /* Asegúrate de que se ajuste al contenedor principal */
 }

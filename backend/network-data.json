@@ -8,6 +8,7 @@
     "ip": "10.195.9.108",
     "port": "1000",
     "networkName": "Cociber1"
+<<<<<<< HEAD
   },
   {
 <<<<<<< HEAD
@@ -43,5 +44,7 @@
     "ip": "10.195.9.108",
     "port": "1234",
     "networkName": "Jacomesito"
+=======
+>>>>>>> 861219a6761a910bf99e8b9d3fcaf5ebe2d00a62
   }
 ]
