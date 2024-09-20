@@ -1,11 +1,16 @@
+/* Estilo para el contenedor del dashboard */
 .dashboard-container {
     display: flex;
     flex-direction: column;
     height: 100vh;
     font-family: Arial, sans-serif; /* Fuente más moderna */
-  }
-  
-  .dashboard-header {
+    background: linear-gradient(135deg, rgba(129, 123, 123, 0.8), rgba(255, 255, 255, 0.4)); /* Fondo degradado */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 15px; /* Bordes redondeados en el contenedor */
+}
+
+/* Estilo para el encabezado del dashboard */
+.dashboard-header {
     background: linear-gradient(135deg, #007BFF, #00D084); /* Gradiente de colores */
     color: white;
     padding: 0.5rem 2rem;
@@ -14,76 +19,73 @@
     align-items: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
     border-bottom: 2px solid #0056b3; /* Borde inferior */
-  }
-  
-  .dashboard-header h1 {
+}
+
+/* Estilo del título en el encabezado */
+.dashboard-header h1 {
     margin: 0;
     text-transform: none; /* Texto en formato normal */
     font-size: 1.5rem; /* Tamaño del texto */
-  }
-  
-  .dashboard-nav {
+}
+
+/* Estilo para la barra de navegación */
+.dashboard-nav {
     margin: 0;
-  }
-  
-  .dashboard-nav ul {
+}
+
+.dashboard-nav ul {
     list-style: none;
     display: flex;
     margin: 0;
     padding: 0;
-  }
-  
-  .dashboard-nav ul li {
+}
+
+.dashboard-nav ul li {
     margin: 0 1rem;
-  }
-  
-  .dashboard-nav ul li a {
+}
+
+.dashboard-nav ul li a {
     color: white;
     text-decoration: none;
     font-weight: 600; /* Texto en negrita */
     transition: color 0.3s ease; /* Transición suave para el hover */
-  }
-  
-  .dashboard-nav ul li a:hover {
+}
+
+.dashboard-nav ul li a:hover {
     color: #FFD700; /* Color dorado al pasar el mouse */
-  }
-  
-  .dashboard-main {
+}
+
+/* Estilo para la sección principal del dashboard */
+.dashboard-main {
     padding: 2rem;
-    background-color: #FFFFFF; /* Fondo blanco para el recuadro */
+    background-color: rgba(63, 60, 60, 0.8); /* Fondo semi-transparente oscuro */
     flex-grow: 1;
     border-top: 1px solid #ddd;
     display: flex;
     flex-direction: column;
     align-items: center; /* Centra el contenido horizontalmente */
     justify-content: flex-start; /* Alinea el contenido hacia la parte superior */
-  }
-  
-  
-  .dashboard-main h2 {
+}
+
+.dashboard-main h2 {
     margin-top: 0;
-    color: #333; /* Color del texto principal */
-  }
-  
+    color: #ffffff; /* Color del texto principal en blanco */
+}
+
+/* Estilo para imágenes en el dashboard */
 .dashboard-image {
-  width: 90%; /* La imagen ocupará el 100% del ancho disponible del recuadro */
-  max-width: 800px; /* Tamaño máximo para evitar que sea demasiado grande */
-  height: auto; /* Mantiene las proporciones */
-  display: block; /* Se asegura de que la imagen sea un bloque */
-  margin: 20px auto; /* Centra la imagen horizontalmente */
-  border-radius: 10px; /* Bordes redondeados para darle un mejor acabado */
-  box-shadow: 0 4px 20px rgba(3, 2, 2, 0.2); /* Sombra más intensa */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave */
+    width: 90%; /* La imagen ocupará el 90% del ancho disponible del recuadro */
+    max-width: 800px; /* Tamaño máximo para evitar que sea demasiado grande */
+    height: auto; /* Mantiene las proporciones */
+    display: block; /* Se asegura de que la imagen sea un bloque */
+    margin: 20px auto; /* Centra la imagen horizontalmente */
+    border-radius: 10px; /* Bordes redondeados para darle un mejor acabado */
+    background: linear-gradient(to bottom, #bdb0b0, #bdb0b0); /* Fondo blanco para el cuadro */
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2); /* Sombra más intensa */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave */
 }
 
 .dashboard-image:hover {
-  transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el ratón */
-  box-shadow: 0 8px 30px rgba(5, 2, 2, 0.3); /* Sombra más pronunciada al hacer hover */
-}
-
-/* Añadiendo un degradado como fondo en un contenedor */
-.dashboard-container {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
-  padding: 20px; /* Espaciado interno */
-  border-radius: 15px; /* Bordes redondeados en el contenedor */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el ratón */
+    box-shadow: 0 8px 30px rgba(5, 2, 2, 0.3); /* Sombra más pronunciada al hacer hover */
 }

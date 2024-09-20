@@ -1,103 +1,89 @@
 /* Estilo para el contenedor principal */
 .pasantes {
-  color: #000000 !important; /* Color negro con alta prioridad */
-}
-
-.estado {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f4f4f9; /* Fondo claro para el contenedor */
-  border-radius: 12px; /* Bordes redondeados más prominentes */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra más profunda para un efecto flotante */
-  max-width: 600px; /* Ancho máximo aumentado para mayor espacio */
-  margin: 2rem auto; /* Centramos el contenedor en la página con un margen vertical */
-  padding: 2.5rem; /* Espaciado interno aumentado para un diseño más espacioso */
-  border: 1px solid #dcdcdc; /* Borde sutil en un tono gris más claro */
-  font-family: Arial, sans-serif; /* Fuente más moderna */
-  color: #333; /* Color de texto más oscuro para mejor legibilidad */
+  color: #ffffff !important; /* Texto en blanco */
+  background: linear-gradient(to right, #0f0c29, #302b63, #24243e); /* Fondo degradado oscuro */
+  border-radius: 12px; /* Bordes redondeados */
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.7); /* Efecto de resplandor neón */
+  padding: 2.5rem; /* Espaciado interno */
+  max-width: 800px; /* Ancho máximo */
+  margin: 2rem auto; /* Centrar */
 }
 
 /* Estilo para la barra de navegación */
 .dashboard-nav {
-  background-color: #4a4a4a; /* Fondo oscuro para la barra de navegación */
-  color: #fff; /* Color blanco para el texto */
-  padding: 1rem 2rem; /* Espaciado interno */
-  border-radius: 8px; /* Bordes redondeados para la barra de navegación */
-  margin-bottom: 2rem; /* Espaciado debajo de la barra de navegación */
-  width: 100%; /* Ancho completo del contenedor */
+  background: linear-gradient(135deg, #667eea, #764ba2); /* Fondo degradado */
+  color: #fff; /* Texto blanco */
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); /* Sombra con efecto neón */
 }
 
-.dashboard-nav ul {
-  list-style-type: none; /* Eliminar viñetas */
-  padding: 0; /* Eliminar espaciado */
-  margin: 0; /* Eliminar margen */
-  display: flex; /* Alinear elementos en fila */
-  justify-content: space-around; /* Espaciado igual entre los elementos */
-}
-
-.dashboard-nav li {
-  margin: 0; /* Eliminar margen */
-}
-
+/* Estilo de los enlaces en la barra de navegación */
 .dashboard-nav a {
-  color: #dacdcd; /* Color blanco para los enlaces */
-  text-decoration: none; /* Eliminar subrayado de los enlaces */
-  font-weight: bold; /* Texto en negrita */
+  color: #dacdcd;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .dashboard-nav a:hover {
-  text-decoration: underline; /* Subrayado al pasar el ratón sobre los enlaces */
+  text-decoration: underline;
 }
 
-/* Estilo para la sección de datos de red */
-.network-data {
-  width: 100%; /* Ancho completo del contenedor */
-  margin-bottom: 2rem; /* Espaciado entre secciones */
-}
-
-/* Contenedor de la tabla para agregar la barra de desplazamiento */
+/* Contenedor de la tabla con estilo visual */
 .table-container {
-  max-height: 400px; /* Ajusta la altura según tus necesidades */
-  overflow-y: auto; /* Agrega barra de desplazamiento vertical si es necesario */
+  background-color: rgba(0, 0, 0, 0.8); /* Fondo semi-transparente oscuro */
+  border-radius: 12px; /* Bordes redondeados */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Borde con transparencia */
+  padding: 1rem;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.7); /* Resplandor neón */
+  margin-bottom: 2rem;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
-/* Resto del CSS para la tabla */
+/* Estilo de la tabla de datos */
 .network-data table {
-  width: 100%; /* Ancho completo de la tabla */
-  border-collapse: collapse; /* Colapsar bordes */
+  width: 100%;
+  border-collapse: collapse;
+  color: #fff; /* Texto blanco */
 }
 
 .network-data th, .network-data td {
-  padding: 0.75rem; /* Espaciado interno de las celdas */
-  text-align: left; /* Alinear texto a la izquierda */
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .network-data th {
-  background-color: #4a4a4a; /* Fondo oscuro para los encabezados de la tabla */
-  color: #fff; /* Color blanco para el texto en los encabezados */
-  font-weight: bold; /* Negrita para los encabezados */
+  background-color: rgba(255, 255, 255, 0.1); /* Encabezado transparente */
+  font-weight: bold;
 }
 
 .network-data tr:nth-child(even) {
-  background-color: #f9f9f9; /* Alternar el color de fondo de las filas para una mejor legibilidad */
+  background-color: rgba(255, 255, 255, 0.05); /* Alternar color de fondo */
 }
 
 .network-data tr:hover {
-  background-color: #eaeaea; /* Fondo ligeramente oscuro al pasar el ratón sobre una fila */
+  background-color: rgba(255, 255, 255, 0.1); /* Hover */
 }
 
 /* Estilo para el botón "Tortazo" */
 .tortazo-button {
-  background-color: #ff6347; /* Color de fondo del botón */
-  color: #fff; /* Color del texto del botón */
-  border: none; /* Sin borde */
-  padding: 0.5rem 1rem; /* Espaciado interno del botón */
-  border-radius: 5px; /* Bordes redondeados */
-  cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
-  font-size: 1rem; /* Tamaño de fuente */
+  background: linear-gradient(135deg, #43cea2, #185a9d); /* Degradado del botón */
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.7); /* Resplandor del botón */
 }
 
 .tortazo-button:hover {
-  background-color: #e55347; /* Color de fondo del botón al pasar el ratón sobre él */
+  background: linear-gradient(135deg, #35a7a1, #164b81); /* Cambio en el degradado */
+  transition: background 0.3s ease;
 }
