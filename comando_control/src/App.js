@@ -6,8 +6,7 @@ import Register from './components/Register';
 import LoginForm from './components/LoginForm';
 import PrivateRoute from './components/PrivateRoute';
 import Estado from './components/estado';
-import Cmd from './components/CmdComponents';
-
+import Cmd from './components/CmdComponents'; // Asegúrate de que el nombre coincida
 
 function App() {
   return (
@@ -19,10 +18,7 @@ function App() {
         <Route path="/login-form" element={<PrivateRoute><LoginForm /></PrivateRoute>} />
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path="/estado" element={<PrivateRoute><Estado /></PrivateRoute>} />
-        <Route path="/estado" element={<PrivateRoute><Estado /></PrivateRoute>} />
-        <Route path="/cmdwindow/:port" element={<PrivateRoute><Cmd /></PrivateRoute>} />
-
-
+        <Route path="/cmd/:port" element={<PrivateRoute><Cmd /></PrivateRoute>} /> {/* Ruta para Cmd */}
       </Routes>
     </Router>
   );

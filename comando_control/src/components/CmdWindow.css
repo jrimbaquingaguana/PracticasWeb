@@ -1,0 +1,81 @@
+/* Estilo para el contenedor principal */
+.cmd-container {
+    color: #ffffff !important; /* Texto en blanco */
+    background: linear-gradient(to right, #0f0c29, #302b63, #24243e); /* Fondo degradado oscuro */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.7); /* Efecto de resplandor neón */
+    padding: 2.5rem; /* Espaciado interno */
+    max-width: 800px; /* Ancho máximo */
+    margin: 2rem auto; /* Centrar */
+    display: flex; /* Para la disposición de la barra lateral y el contenido */
+}
+
+/* Estilo para la barra lateral */
+.sidebar {
+    width: 200px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); /* Sombra con efecto neón */
+}
+
+/* Estilo del botón "Regresar" */
+.back-button {
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(135deg, #43cea2, #185a9d); /* Degradado del botón */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.7); /* Resplandor del botón */
+    transition: background 0.3s;
+}
+
+.back-button:hover {
+    background: linear-gradient(135deg, #35a7a1, #164b81); /* Cambio en el degradado */
+}
+
+/* Estilo para la ventana de comandos */
+.cmd-window {
+    flex: 1;
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+    overflow-y: auto; /* Habilitar desplazamiento vertical */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.7); /* Efecto de resplandor */
+    max-height: 400px; /* Limitar la altura */
+}
+
+/* Estilo del historial de comandos */
+.command-history {
+    white-space: pre-wrap;
+    max-height: 100%; /* Permite que la historia ocupe todo el espacio disponible */
+}
+
+/* Estilo de los comandos de usuario y respuestas del servidor */
+.user-command {
+    color: #00ff00; /* Verde para comandos de usuario */
+}
+
+.server-response {
+    color: #ffffff; /* Blanco para respuestas del servidor */
+}
+
+/* Estilo para la entrada de comandos */
+.cmd-input {
+    width: 100%;
+    background-color: #222;
+    color: #fff;
+    border: none;
+    outline: none;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.cmd-input::placeholder {
+    color: #888; /* Color del placeholder */
+}
