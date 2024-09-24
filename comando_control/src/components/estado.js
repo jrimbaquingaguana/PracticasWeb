@@ -35,21 +35,33 @@ function Estado() {
   };
 
   // Función para manejar la verificación de estados
-  const checkNetworkStates = async (data) => {
-    setLoading(true);
-    setMessage('Verificando redes...');
+const checkNetworkStates = async (data) => {
+  setLoading(true);
+  setMessage('Verificando redes...');
 
-    // Consultar el estado de ncat para cada puerto
-    const statusPromises = data.map(async (item) => {
-      const status = await fetchNcatStatus(item.port);
-      return { ...item, ncatStatus: status };
-    });
+  // Variables para el manejo de los puntos
+  let dots = '';
+  const interval = setInterval(() => {
+    dots += '.';
+    if (dots.length > 3) {
+      dots = ''; // Reinicia los puntos después de 3
+    }
+    setMessage(`Verificando redes${dots}`);
+  }, 500); // Cambia cada 500 ms
 
-    const updatedData = await Promise.all(statusPromises);
-    setNetworkData(updatedData); // Actualizar con los nuevos estados
-    setLoading(false);
-    setMessage('Proceso terminado.'); // Mensaje al finalizar
-  };
+  // Consultar el estado de ncat para cada puerto
+  const statusPromises = data.map(async (item) => {
+    const status = await fetchNcatStatus(item.port);
+    return { ...item, ncatStatus: status };
+  });
+
+  const updatedData = await Promise.all(statusPromises); // Espera a que se completen todas las promesas
+
+  clearInterval(interval); // Limpia el intervalo una vez que termina
+  setNetworkData(updatedData); // Actualizar con los nuevos estados
+  setLoading(false);
+  setMessage('Proceso terminado.'); // Mensaje al finalizar
+};
 
   // Llamar a fetchNetworkData cuando el componente se monte
   useEffect(() => {
@@ -81,7 +93,7 @@ function Estado() {
           <table>
             <thead>
               <tr>
-                <th>IP</th>
+                <th>IP del Atacante</th>
                 <th>Port</th>
                 <th>Network Name</th>
                 <th>Status</th>
