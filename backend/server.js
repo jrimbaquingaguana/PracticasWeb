@@ -223,6 +223,8 @@ app.get('/network-data', (req, res) => {
 let ncatProcess;
 let ncatConnected = false; // Estado de conexión
 
+
+
 // Ruta para iniciar ncat
 app.post('/start-ncat', (req, res) => {
   const port = req.body.port;
@@ -231,17 +233,18 @@ app.post('/start-ncat', (req, res) => {
     ncatProcess.kill(); // Matar el proceso anterior si existe
   }
 
-  ncatProcess = spawn('ncat', ['-nlvp', 1234]);
+  ncatProcess = spawn('ncat', ['-nlvp', 1234]); // Usa el puerto recibido
 
   ncatProcess.stdout.on('data', (data) => {
     const message = `Ncat stdout: ${data.toString()}`;
     console.log(message);
+    // Enviar el mensaje a todos los clientes WebSocket conectados
     wss.clients.forEach(client => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(message);
       }
     });
-    
+
     // Cambia el estado a conectado cuando se recibe salida
     ncatConnected = true;
   });
@@ -249,6 +252,7 @@ app.post('/start-ncat', (req, res) => {
   ncatProcess.stderr.on('data', (data) => {
     const message = `Ncat stderr: ${data.toString()}`;
     console.error(message);
+    // Enviar el mensaje de error a todos los clientes WebSocket conectados
     wss.clients.forEach(client => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(message);
@@ -261,57 +265,22 @@ app.post('/start-ncat', (req, res) => {
     ncatConnected = false; // Cambia el estado a desconectado
   });
 
-  res.json({ message: 'Ncat started' });
+  res.json({ message: 'Ncat started', port: port });
+});
+
+// Ruta para enviar comandos a ncat
+app.post('/send-command', (req, res) => {
+  const command = req.body.command;
+
+  if (ncatProcess) {
+    ncatProcess.stdin.write(`${command}\n`); // Envía el comando a ncat
+    res.json({ message: 'Command sent', command: command });
+  } else {
+    res.status(400).json({ message: 'Ncat is not running' });
+  }
 });
 
 
-// Asegúrate de que shellProcess esté inicializado correctamente
-let shellProcess = spawn('cmd.exe', { shell: true });
-
-app.post('/execute-command', (req, res) => {
-  const { command } = req.body;
-
-  if (!ncatConnected) {
-    return res.status(403).json({ error: 'Conexión ncat no está activa. No se pueden ejecutar comandos.' });
-  }
-
-  if (command === 'cls') {
-    shellProcess.stdin.write('cls\n');
-    return res.json({ output: '' });
-  }
-
-  if (command.startsWith('cd ')) {
-    return res.json({ output: `No se puede cambiar de directorio: ${command.split(' ')[1]}` });
-  }
-
-  shellProcess.stdin.write(`${command}\n`);
-
-  let output = '';
-  let isResponded = false;
-
-  shellProcess.stdout.on('data', (data) => {
-    output += data.toString();
-    wss.clients.forEach(client => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(`Command output: ${data.toString()}`);
-      }
-    });
-  });
-
-  shellProcess.stderr.on('data', (data) => {
-    if (!isResponded) {
-      isResponded = true;
-      return res.status(500).json({ error: data.toString() });
-    }
-  });
-
-  shellProcess.on('exit', (code) => {
-    if (!isResponded) {
-      isResponded = true;
-      res.json({ output });
-    }
-  });
-});
 
 server.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

@@ -35,15 +35,17 @@ function CmdWindow({ port }) {
     setInputCommand(event.target.value);
   };
 
-  const handleKeyPress = (event) => {
+  const handleKeyPress = async (event) => {
     if (event.key === 'Enter' && isNcatConnected) {
       const command = inputCommand.trim();
       setCommandHistory((prev) => [...prev, `> ${command}`]);
       setInputCommand('');
 
-      // Usar socketRef para enviar el comando
-      if (socketRef.current) {
-        socketRef.current.send(command);
+      // Enviar el comando a la nueva ruta
+      try {
+        await axios.post('http://localhost:5000/send-command', { command });
+      } catch (error) {
+        console.error('Error sending command:', error);
       }
     }
   };
