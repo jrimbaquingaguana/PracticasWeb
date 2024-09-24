@@ -6,6 +6,8 @@ import Register from './components/Register';
 import LoginForm from './components/LoginForm';
 import PrivateRoute from './components/PrivateRoute';
 import Estado from './components/estado';
+import Cmd from './components/CmdComponents';
+
 
 function App() {
   return (
@@ -17,6 +19,10 @@ function App() {
         <Route path="/login-form" element={<PrivateRoute><LoginForm /></PrivateRoute>} />
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path="/estado" element={<PrivateRoute><Estado /></PrivateRoute>} />
+        <Route path="/estado" element={<PrivateRoute><Estado /></PrivateRoute>} />
+        <Route path="/cmdwindow/:port" element={<PrivateRoute><Cmd /></PrivateRoute>} />
+
+
       </Routes>
     </Router>
   );

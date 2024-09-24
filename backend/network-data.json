@@ -2,29 +2,27 @@
   {
     "ip": "10.195.9.108",
     "port": "1234",
-    "networkName": "Jacome"
+    "networkName": "Red2"
   },
   {
     "ip": "10.195.9.108",
     "port": "1000",
     "networkName": "Cociber1"
-<<<<<<< HEAD
-  },
-  {
-<<<<<<< HEAD
-    "ip": "10.195.9.154",
-    "port": "1234",
-    "networkName": "Jacomes"
   },
   {
     "ip": "10.195.9.154",
     "port": "1234",
-    "networkName": "Jacomecito"
+    "networkName": "Red2"
+  },
+  {
+    "ip": "10.195.9.154",
+    "port": "1234",
+    "networkName": "Red1"
   },
   {
     "ip": "10.195.9.154",
     "port": "1231",
-    "networkName": "Jacomecito"
+    "networkName": "Red1"
   },
   {
     "ip": "10.195.9.154",
@@ -35,16 +33,10 @@
     "ip": "10.195.9.154",
     "port": "1234",
     "networkName": "prueba2"
-=======
-    "ip": "10.195.9.108",
-    "port": "1237",
-    "networkName": "Cociber1"
   },
   {
-    "ip": "10.195.9.108",
+    "ip": "10.01.20.5",
     "port": "1234",
-    "networkName": "Jacomesito"
-=======
->>>>>>> 861219a6761a910bf99e8b9d3fcaf5ebe2d00a62
+    "networkName": "Red1"
   }
 ]

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './LoginForm.css';
 import './estado.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 
 function Estado() {
   const [ncatStatus, setNcatStatus] = useState('');
@@ -44,6 +44,7 @@ function Estado() {
       console.error('Error fetching network data:', err);
     }
   };
+  const navigate = useNavigate();
 
   // Filtrar los datos de red basados en el nombre seleccionado
   const handleNetworkNameChange = (event) => {
@@ -72,9 +73,11 @@ function Estado() {
   };
 
   // Función para manejar el clic en el botón "Tortazo"
-  const handleTortazoClick = () => {
-    alert('haz sido atacado por dos ingenieros del cociber');
+  const handleTortazoClick = (port) => {
+    // Redirigir a CmdWindow con el puerto
+    navigate(`/cmdwindow/${port}`);
   };
+  
 
   return (
     <div className="estado">
@@ -121,7 +124,7 @@ function Estado() {
                     {data.ncatStatus === 'On' && ( // Mostrar el botón "Tortazo" solo si el estado es "On"
                       <button 
                         className="tortazo-button"
-                        onClick={handleTortazoClick}
+                        onClick={() => handleTortazoClick(data.port)} 
                       >
                         ATAQUE!
                       </button>
