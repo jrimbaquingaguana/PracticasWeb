@@ -5,16 +5,15 @@ import './estado.css';
 import { Link, useNavigate  } from 'react-router-dom';
 
 function Estado() {
-  const [ncatStatus, setNcatStatus] = useState('');
   const [networkData, setNetworkData] = useState([]);
-  const [selectedNetworkName, setSelectedNetworkName] = useState('');
-  const [filteredData, setFilteredData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
   // Función para obtener el estado de ncat para un puerto específico
   const fetchNcatStatus = async (port) => {
     try {
       const response = await axios.get('http://localhost:5000/carpetas', {
-        params: { port } // Pasar el puerto como parámetro de consulta
+        params: { port }
       });
       return response.data.ncatOutput; // Devolver el estado de ncat
     } catch (err) {
@@ -28,44 +27,47 @@ function Estado() {
     try {
       const response = await axios.get('http://localhost:5000/network-data');
       const data = response.data;
-      setNetworkData(data);
-      setFilteredData(data);  // Inicialmente, muestra todos los datos
-
-      // Consultar el estado de ncat para cada puerto
-      const statusPromises = data.map(async (item) => {
-        const status = await fetchNcatStatus(item.port);
-        return { ...item, ncatStatus: status };
-      });
-
-      // Esperar a que todas las promesas se resuelvan y actualizar el estado
-      const updatedData = await Promise.all(statusPromises);
-      setFilteredData(updatedData);
+      setNetworkData(data); // Almacenar datos de red
+      checkNetworkStates(data); // Comenzar a verificar estados
     } catch (err) {
       console.error('Error fetching network data:', err);
     }
   };
   const navigate = useNavigate();
 
-  // Filtrar los datos de red basados en el nombre seleccionado
-  const handleNetworkNameChange = (event) => {
-    const name = event.target.value;
-    setSelectedNetworkName(name);
+  // Función para manejar la verificación de estados
+const checkNetworkStates = async (data) => {
+  setLoading(true);
+  setMessage('Verificando redes...');
 
-    if (name === '') {
-      setFilteredData(networkData);
-    } else {
-      const filtered = networkData.filter(data => data.networkName === name);
-      setFilteredData(filtered);
+  // Variables para el manejo de los puntos
+  let dots = '';
+  const interval = setInterval(() => {
+    dots += '.';
+    if (dots.length > 3) {
+      dots = ''; // Reinicia los puntos después de 3
     }
-  };
+    setMessage(`Verificando redes${dots}`);
+  }, 500); // Cambia cada 500 ms
+
+  // Consultar el estado de ncat para cada puerto
+  const statusPromises = data.map(async (item) => {
+    const status = await fetchNcatStatus(item.port);
+    return { ...item, ncatStatus: status };
+  });
+
+  const updatedData = await Promise.all(statusPromises); // Espera a que se completen todas las promesas
+
+  clearInterval(interval); // Limpia el intervalo una vez que termina
+  setNetworkData(updatedData); // Actualizar con los nuevos estados
+  setLoading(false);
+  setMessage('Proceso terminado.'); // Mensaje al finalizar
+};
 
   // Llamar a fetchNetworkData cuando el componente se monte
   useEffect(() => {
     fetchNetworkData();
   }, []);
-
-  // Obtener los nombres únicos de networks para el filtro
-  const networkNames = [...new Set(networkData.map(data => data.networkName))];
 
   // Función para determinar el color del botón basado en el estado de ncat
   const getButtonColor = (status) => {
@@ -73,11 +75,9 @@ function Estado() {
   };
 
   // Función para manejar el clic en el botón "Tortazo"
-  const handleTortazoClick = (port) => {
-    // Redirigir a CmdWindow con el puerto
-    navigate(`/cmdwindow/${port}`);
+  const handleTortazoClick = () => {
+    alert('haz sido atacado por dos ingenieros del cociber');
   };
-  
 
   return (
     <div className="estado">
@@ -93,19 +93,21 @@ function Estado() {
       <div className="network-data">
         <h2>Datos de Red</h2>
 
+        {loading && <p className="message">{message}</p>} {/* Mostrar mensaje de progreso */}
+
         <div className="table-container">
           <table>
             <thead>
               <tr>
-                <th>IP</th>
+                <th>IP del Atacante</th>
                 <th>Port</th>
                 <th>Network Name</th>
                 <th>Status</th>
-                <th>Action</th> {/* Añadido para el nuevo botón */}
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((data, index) => (
+              {networkData.map((data, index) => (
                 <tr key={index}>
                   <td>{data.ip}</td>
                   <td>{data.port}</td>
@@ -115,16 +117,16 @@ function Estado() {
                       style={{ 
                         backgroundColor: getButtonColor(data.ncatStatus) 
                       }}
-                      disabled // Desactivar el botón si no necesitas interacción
+                      disabled
                     >
                       {data.ncatStatus === 'On' ? 'On' : 'Off'}
                     </button>
                   </td>
                   <td>
-                    {data.ncatStatus === 'On' && ( // Mostrar el botón "Tortazo" solo si el estado es "On"
+                    {data.ncatStatus === 'On' && (
                       <button 
                         className="tortazo-button"
-                        onClick={() => handleTortazoClick(data.port)} 
+                        onClick={handleTortazoClick}
                       >
                         ATAQUE!
                       </button>
@@ -135,6 +137,8 @@ function Estado() {
             </tbody>
           </table>
         </div>
+
+        {!loading && message && <p className="message">{message}</p>} {/* Mostrar mensaje final */}
       </div>
     </div>
   );

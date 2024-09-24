@@ -87,3 +87,28 @@
   background: linear-gradient(135deg, #35a7a1, #164b81); /* Cambio en el degradado */
   transition: background 0.3s ease;
 }
+/* Estilo para los mensajes de progreso */
+.message {
+  color: #ffffff !important; /* Texto en blanco */
+  background: rgba(0, 0, 0, 0.8); /* Fondo oscuro semi-transparente */
+  border-radius: 8px; /* Bordes redondeados */
+  padding: 0.5rem; /* Espaciado interno */
+  width: 310px; /* Ajusta el ancho a tu preferencia */
+  margin: 1rem auto; /* Margen superior e inferior y centrado horizontal */
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.7); /* Efecto de resplandor neón */
+  text-align: center; /* Centrar el texto */
+}
+
+/* Estilo específico para el contenedor de la tabla de datos */
+.table-container {
+  width: 106%; /* Permite que el contenedor de la tabla tenga un ancho automático */
+  padding: 1rem; /* Espaciado interno */
+  margin-bottom: 2rem; /* Espaciado inferior */
+}
+
+/* Estilo de la tabla de datos */
+.network-data table {
+  width: 100%; /* Mantiene la tabla ocupando todo el espacio disponible */
+  border-collapse: collapse;
+  color: #fff; /* Texto blanco */
+}

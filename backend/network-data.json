@@ -33,10 +33,5 @@
     "ip": "10.195.9.154",
     "port": "1234",
     "networkName": "prueba2"
-  },
-  {
-    "ip": "10.01.20.5",
-    "port": "1234",
-    "networkName": "Red1"
   }
 ]
