@@ -92,3 +92,9 @@ button:hover {
     overflow-y: auto; /* Permitir desplazamiento si el contenido es demasiado grande */
     width: 106%; /* Asegúrate de que se ajuste al contenedor principal */
 }
+.error {
+    color: #f0ecec; /* Cambia el color a blanco */
+    font-weight: 600;
+    margin-top: 1rem;
+    text-align: center;
+}

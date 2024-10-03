@@ -19,7 +19,7 @@ const Dashboard = () => {
       </header>
       <main className="dashboard-main">
       <h1>BIENVENIDO COMANDO</h1>
-        <h2>¡Si algo se puede medir, se puede mejorar!</h2>
+        <h2>¡Si algo se puede medir, se puede mejorar!🔫🗿🪖</h2>
         {/* Agregamos la imagen aquí */}
         <img src={imagenControl} alt="Imagen de control" className="dashboard-image" />
       </main>

@@ -94,8 +94,8 @@ const Register = () => {
           </div>
           <button type="submit" className="btn-login">Registrar</button>
         </form>
-        <p className="register-link">
-          ¿Ya tienes una cuenta? <a href="/login">Inicia sesión aquí</a>
+        <p className="register-link"style={{ color: 'white' }}>
+          ¿Ya tienes una cuenta? <a href="/login"style={{ color: 'purple' }}>Inicia sesión aquí</a>
         </p>
       </div>
     </div>

@@ -70,9 +70,9 @@ const Login = () => {
           {errors.general && <p className="error">{errors.general}</p>}
           <button type="submit" className="btn-login">Iniciar Sesión</button>
         </form>
-        <p className="register-link">
-          ¿No tienes una cuenta? <a href="/register">Regístrate aquí</a>
-        </p>
+        <p className="register-link" style={{ color: 'white' }}>
+            ¿No tienes una cuenta? <a href="/register" style={{ color: 'purple' }}>Regístrate aquí</a>
+          </p>
       </div>
     </div>
   );

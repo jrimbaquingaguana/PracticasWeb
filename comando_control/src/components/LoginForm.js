@@ -129,8 +129,8 @@ function LoginForm() {
         </div>
         <button type="submit">Generar Script</button>
       </form>
-      {error && <p>{error}</p>}
-    </div>
+      {error && <p className="error">{error}</p>}
+      </div>
   );
 }
 

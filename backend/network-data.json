@@ -33,5 +33,10 @@
     "ip": "10.195.9.154",
     "port": "1234",
     "networkName": "prueba2"
+  },
+  {
+    "ip": "10.195.9.108",
+    "port": "1234",
+    "networkName": "Jacome"
   }
 ]
