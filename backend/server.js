@@ -6,6 +6,8 @@ const bcrypt = require('bcryptjs');
 const { exec, spawn } = require('child_process');
 const app = express();
 const port = 5000;
+const axios = require('axios'); // Necesitarás instalar axios si no lo tienes
+
 const http = require('http');
 const WebSocket = require('ws');
 
@@ -224,16 +226,21 @@ let ncatProcess;
 let ncatConnected = false; // Estado de conexión
 
 
+app.use(express.json()); // Para parsear JSON en el cuerpo de la solicitud
 
-// Ruta para iniciar ncat
 app.post('/start-ncat', (req, res) => {
   const port = req.body.port;
+
+  // Validar que el puerto sea un número válido
+  if (!port || isNaN(port) || port <= 0 || port > 65535) {
+    return res.status(400).json({ message: 'Invalid port number' });
+  }
 
   if (ncatProcess) {
     ncatProcess.kill(); // Matar el proceso anterior si existe
   }
 
-  ncatProcess = spawn('ncat', ['-nlvp', 1234]); // Usa el puerto recibido
+  ncatProcess = spawn('ncat', ['-nlvp', port]); // Usa el puerto recibido
 
   ncatProcess.stdout.on('data', (data) => {
     const message = `Ncat stdout: ${data.toString()}`;
@@ -268,6 +275,8 @@ app.post('/start-ncat', (req, res) => {
   res.json({ message: 'Ncat started', port: port });
 });
 
+
+
 // Ruta para enviar comandos a ncat
 app.post('/send-command', (req, res) => {
   const command = req.body.command;
@@ -280,6 +289,25 @@ app.post('/send-command', (req, res) => {
   }
 });
 
+
+// Nuevo endpoint para iniciar ncat usando GET
+app.get('/cmd/:port', async (req, res) => {
+  const port = req.params.port;
+
+  // Validar que el puerto sea un número válido
+  if (isNaN(port) || port <= 0 || port > 65535) {
+    return res.status(400).json({ message: 'Invalid port number' });
+  }
+
+  try {
+    // Hacer la solicitud POST internamente
+    const response = await axios.post('http://localhost:5000/start-ncat', { port: Number(port) });
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error starting ncat:', error);
+    res.status(500).json({ message: 'Error starting ncat', error: error.message });
+  }
+});
 
 
 server.listen(port, () => {

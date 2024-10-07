@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './CmdWindow.css';
 
-function CmdWindow({ port }) {
+function CmdWindow() {
+  const { port } = useParams(); // Obtener el puerto de la URL
   const [inputCommand, setInputCommand] = useState('');
   const [commandHistory, setCommandHistory] = useState([]);
   const [isNcatConnected, setIsNcatConnected] = useState(false);
@@ -13,6 +14,10 @@ function CmdWindow({ port }) {
 
   useEffect(() => {
     socketRef.current = new WebSocket('ws://localhost:5000');
+
+    socketRef.current.onopen = () => {
+      console.log('WebSocket connected');
+    };
 
     socketRef.current.onmessage = (event) => {
       const data = event.data;
@@ -26,7 +31,7 @@ function CmdWindow({ port }) {
 
     const startNcat = async () => {
       try {
-        await axios.post('http://localhost:5000/start-ncat', { port });
+        await axios.get(`http://localhost:5000/cmd/${port}`); // Usar el puerto de la URL
         setIsNcatConnected(true);
       } catch (error) {
         console.error('Error starting ncat:', error);
@@ -55,11 +60,13 @@ function CmdWindow({ port }) {
   };
 
   const executeCommand = async (command) => {
+    if (!command) return;
+
     setCommandHistory((prev) => [...prev, `> ${command}`]);
     setInputCommand('');
 
     try {
-      const response = await axios.post('http://localhost:5000/send-command', { command });
+      await axios.post('http://localhost:5000/send-command', { command });
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'Error al enviar el comando.';
       setCommandHistory((prev) => [...prev, errorMessage]);
@@ -83,11 +90,11 @@ function CmdWindow({ port }) {
           Regresar a Ver Estado
         </button>
         <div className="command-buttons">
-  <button className="command-button" onClick={() => handleButtonClick('whoami')}>whoami</button>
-  <button className="command-button" onClick={() => handleButtonClick('get-service')}>get-service</button>
-  <button className="command-button" onClick={() => handleButtonClick('get-process')}>get-process</button>
-  <button className="command-button" onClick={() => handleButtonClick('get-computerinfo')}>get-computerinfo</button>
-</div>
+          <button className="command-button" onClick={() => handleButtonClick('whoami')}>whoami</button>
+          <button className="command-button" onClick={() => handleButtonClick('get-service')}>get-service</button>
+          <button className="command-button" onClick={() => handleButtonClick('get-process')}>get-process</button>
+          <button className="command-button" onClick={() => handleButtonClick('get-computerinfo')}>get-computerinfo</button>
+        </div>
       </div>
       <div className="cmd-window" ref={commandHistoryRef}>
         <pre className="command-history">
