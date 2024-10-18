@@ -1,23 +1,8 @@
 [
   {
     "ip": "10.195.9.108",
-    "port": "1234",
-    "networkName": "Red2"
-  },
-  {
-    "ip": "10.195.9.108",
     "port": "1000",
     "networkName": "Cociber1"
-  },
-  {
-    "ip": "10.195.9.154",
-    "port": "1232",
-    "networkName": "Red2"
-  },
-  {
-    "ip": "10.195.9.154",
-    "port": "1234",
-    "networkName": "Red1"
   },
   {
     "ip": "10.195.9.154",
@@ -27,16 +12,11 @@
   {
     "ip": "10.195.9.154",
     "port": "1234",
-    "networkName": "Prueba1"
+    "networkName": "Josue"
   },
   {
-    "ip": "10.195.9.154",
-    "port": "1234",
-    "networkName": "prueba2"
-  },
-  {
-    "ip": "10.195.9.108",
-    "port": "1234",
-    "networkName": "Jacome"
+    "ip": "10.195.9.234",
+    "port": "1232",
+    "networkName": "COCIBER"
   }
 ]

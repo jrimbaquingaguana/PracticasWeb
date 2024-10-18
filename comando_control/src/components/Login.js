@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../components/AuthContext'; // Importar el contexto
+import { useAuth } from '../components/AuthContext';
 import './Login.css';
 
 const Login = () => {
@@ -9,7 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  const { login } = useAuth(); // Obtener la función de login del contexto
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +30,8 @@ const Login = () => {
       });
 
       if (response.status === 200) {
-        login(); // Actualiza el estado de autenticación
+        const userData = { username }; // Almacena el nombre de usuario
+        login(userData); // Actualiza el estado de autenticación
         navigate('/dashboard', { replace: true }); // Redirige al dashboard
       }
     } catch (error) {
@@ -71,8 +72,8 @@ const Login = () => {
           <button type="submit" className="btn-login">Iniciar Sesión</button>
         </form>
         <p className="register-link" style={{ color: 'white' }}>
-            ¿No tienes una cuenta? <a href="/register" style={{ color: 'purple' }}>Regístrate aquí</a>
-          </p>
+          ¿No tienes una cuenta? <a href="/register" style={{ color: 'purple' }}>Regístrate aquí</a>
+        </p>
       </div>
     </div>
   );
